@@ -11,4 +11,10 @@ public interface IAliadoService {
 
     List<Aliado> listAliados() throws Exception;
 
+    Aliado listAliadoById(Integer aliadoId) throws Exception;
+
+    Aliado updateAliado(Integer aliadoId, Aliado newAliado) throws Exception;
+
+    Boolean deleteAliado(Integer aliadoId) throws Exception;
+
 }
