@@ -2,6 +2,8 @@ package com.casa_dragon.models;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @Entity
 public class Jinete {
 
@@ -10,15 +12,12 @@ public class Jinete {
     private Integer id;
     private String nombres;
     private float edad;
-    private String fechaMontura;
-
-    @ManyToOne
-    Dragon dragon;
+    private Date fechaMontura;
 
     public Jinete() {
     }
 
-    public Jinete(Integer id, String nombres, float edad, String fechaMontura) {
+    public Jinete(Integer id, String nombres, float edad, Date fechaMontura) {
         this.id = id;
         this.nombres = nombres;
         this.edad = edad;
@@ -49,11 +48,11 @@ public class Jinete {
         this.edad = edad;
     }
 
-    public String getFechaMontura() {
+    public Date getFechaMontura() {
         return fechaMontura;
     }
 
-    public void setFechaMontura(String fechaMontura) {
+    public void setFechaMontura(Date fechaMontura) {
         this.fechaMontura = fechaMontura;
     }
 

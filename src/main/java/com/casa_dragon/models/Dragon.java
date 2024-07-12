@@ -16,9 +16,6 @@ public class Dragon {
     @Column(name = "numero_victorias")
     private Integer numeroVictorias;
 
-    @OneToMany
-    Jinete jinete;
-
     public Dragon() {
     }
 
