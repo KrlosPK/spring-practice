@@ -1,9 +1,7 @@
 package com.casa_dragon.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 
 @Entity
 public class Aliado {
@@ -14,6 +12,11 @@ public class Aliado {
     private String nombres;
     private String ubicacion;
     private double aporteMonetario;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_jinete", referencedColumnName = "id")
+    @JsonBackReference
+    Jinete jinete;
 
     public Aliado() {
     }

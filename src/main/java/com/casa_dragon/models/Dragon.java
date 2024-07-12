@@ -1,5 +1,6 @@
 package com.casa_dragon.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +16,11 @@ public class Dragon {
 
     @Column(name = "numero_victorias")
     private Integer numeroVictorias;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_jinete", referencedColumnName = "id")
+    @JsonBackReference
+    Jinete jinete;
 
     public Dragon() {
     }

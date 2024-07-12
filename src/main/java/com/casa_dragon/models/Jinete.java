@@ -1,8 +1,10 @@
 package com.casa_dragon.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Jinete {
@@ -13,6 +15,14 @@ public class Jinete {
     private String nombres;
     private float edad;
     private Date fechaMontura;
+
+    @OneToMany(mappedBy = "jinete")
+    @JsonManagedReference
+    private List<Dragon> dragones;
+
+    @OneToMany(mappedBy = "jinete")
+    @JsonManagedReference
+    private List<Aliado> aliados;
 
     public Jinete() {
     }
