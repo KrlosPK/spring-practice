@@ -12,9 +12,9 @@ public class Jinete {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nombres;
-    private float edad;
-    private Date fechaMontura;
+    private String nombres; // máximo 50 caracteres y solo letras y espacios
+    private float edad; // solo números positivos
+    private Date fechaMontura; // dd/MM/YYYY
 
     @OneToMany(mappedBy = "jinete")
     @JsonManagedReference

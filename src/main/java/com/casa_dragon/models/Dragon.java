@@ -10,12 +10,12 @@ public class Dragon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String nombre;
-    private Integer edad;
-    private float altura;
+    private String nombre; // máximo 20 caracteres y solo letras y espacios
+    private Integer edad; // solo números positivos y máximo 2000
+    private float altura; // solo números positivos
 
     @Column(name = "numero_victorias")
-    private Integer numeroVictorias;
+    private Integer numeroVictorias; // solo números positivos
 
     @ManyToOne
     @JoinColumn(name = "fk_jinete", referencedColumnName = "id")

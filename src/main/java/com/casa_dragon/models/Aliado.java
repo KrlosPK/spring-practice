@@ -9,9 +9,9 @@ public class Aliado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nombres;
-    private String ubicacion;
-    private double aporteMonetario;
+    private String nombres; // máximo 50 caracteres y solo letras y espacios
+    private String ubicacion; // máximo 70 caracteres
+    private double aporteMonetario; // solo números positivos
 
     @ManyToOne
     @JoinColumn(name = "fk_jinete", referencedColumnName = "id")
