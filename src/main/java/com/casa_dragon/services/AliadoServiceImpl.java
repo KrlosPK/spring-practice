@@ -1,8 +1,9 @@
 package com.casa_dragon.services;
 
+import com.casa_dragon.dto.AliadoDTO;
 import com.casa_dragon.helpers.ServiceMessage;
+import com.casa_dragon.maps.IAliadoMap;
 import com.casa_dragon.models.Aliado;
-import com.casa_dragon.models.Dragon;
 import com.casa_dragon.repositories.AliadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,31 +17,34 @@ public class AliadoServiceImpl implements IAliadoService {
     @Autowired
     private AliadoRepository aliadoRepository;
 
+    @Autowired
+    private IAliadoMap iAliadoMap;
+
     @Override
-    public Aliado addAliado (Aliado aliado) throws Exception {
+    public AliadoDTO addAliado (Aliado aliado) throws Exception {
         try {
-            return aliadoRepository.save(aliado);
+            return iAliadoMap.mapAliado(aliadoRepository.save(aliado));
         } catch (Exception error) {
             throw new Exception(error.getMessage());
         }
     }
 
     @Override
-    public List<Aliado> listAliados() throws Exception {
+    public List<AliadoDTO> listAliados() throws Exception {
         try {
-            return (List<Aliado>) aliadoRepository.findAll();
+            return iAliadoMap.mapAliadoList(aliadoRepository.findAll());
         } catch (Exception error) {
             throw new Exception(error.getMessage());
         }
     }
 
     @Override
-    public Aliado listAliadoById(Integer aliadoId) throws Exception {
+    public AliadoDTO listAliadoById(Integer aliadoId) throws Exception {
         try {
             Optional<Aliado> aliadoOptional = aliadoRepository.findById(aliadoId);
 
             if (aliadoOptional.isPresent()) {
-                return aliadoOptional.get();
+                return iAliadoMap.mapAliado(aliadoOptional.get());
             } else {
                 throw new Exception(ServiceMessage.ALIADO_NOT_FOUND.getMessage());
             }
@@ -50,7 +54,7 @@ public class AliadoServiceImpl implements IAliadoService {
     }
 
     @Override
-    public Aliado updateAliado(Integer aliadoId, Aliado newAliado) throws Exception {
+    public AliadoDTO updateAliado(Integer aliadoId, Aliado newAliado) throws Exception {
         try {
             Optional<Aliado> aliadoOptional = aliadoRepository.findById(aliadoId);
 
@@ -61,7 +65,7 @@ public class AliadoServiceImpl implements IAliadoService {
                 aliado.setNombres(newAliado.getNombres());
                 aliado.setUbicacion(newAliado.getUbicacion());
 
-                return aliadoRepository.save(aliado);
+                return iAliadoMap.mapAliado(aliadoRepository.save(aliado));
             } else {
                 throw new Exception(ServiceMessage.ALIADO_NOT_FOUND.getMessage());
             }

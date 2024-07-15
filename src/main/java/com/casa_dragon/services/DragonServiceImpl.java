@@ -1,6 +1,8 @@
 package com.casa_dragon.services;
 
+import com.casa_dragon.dto.DragonDTO;
 import com.casa_dragon.helpers.ServiceMessage;
+import com.casa_dragon.maps.IDragonMap;
 import com.casa_dragon.models.Dragon;
 import com.casa_dragon.repositories.DragonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,31 +17,34 @@ public class DragonServiceImpl implements IDragonService {
     @Autowired
     private DragonRepository dragonRepository;
 
+    @Autowired
+    private IDragonMap iDragonMap;
+
     @Override
-    public Dragon addDragon (Dragon dragon) throws Exception {
+    public DragonDTO addDragon (Dragon dragon) throws Exception {
         try {
-            return dragonRepository.save(dragon);
+            return iDragonMap.mapDragon(dragonRepository.save(dragon));
         } catch (Exception error) {
             throw new Exception(error.getMessage());
         }
     }
 
     @Override
-    public List<Dragon> listDragons() throws Exception {
+    public List<DragonDTO> listDragons() throws Exception {
         try {
-            return (List<Dragon>) dragonRepository.findAll();
+            return iDragonMap.mapDragonList(dragonRepository.findAll());
         } catch (Exception error) {
             throw new Exception(error.getMessage());
         }
     }
 
     @Override
-    public Dragon listDragonById(Integer dragonId) throws Exception {
+    public DragonDTO listDragonById(Integer dragonId) throws Exception {
         try {
             Optional<Dragon> dragonOptional = dragonRepository.findById(dragonId);
 
             if (dragonOptional.isPresent()) {
-                return dragonOptional.get();
+                return iDragonMap.mapDragon(dragonOptional.get());
             } else {
                 throw new Exception(ServiceMessage.DRAGON_NOT_FOUND.getMessage());
             }
@@ -49,7 +54,7 @@ public class DragonServiceImpl implements IDragonService {
     }
 
     @Override
-    public Dragon updateDragon(Integer dragonId, Dragon newDragon) throws Exception {
+    public DragonDTO updateDragon(Integer dragonId, Dragon newDragon) throws Exception {
         try {
             Optional<Dragon> dragonOptional = dragonRepository.findById(dragonId);
 
@@ -61,7 +66,7 @@ public class DragonServiceImpl implements IDragonService {
                 dragon.setNombre(newDragon.getNombre());
                 dragon.setNumeroVictorias(newDragon.getNumeroVictorias());
 
-                return dragonRepository.save(dragon);
+                return iDragonMap.mapDragon(dragonRepository.save(dragon));
             } else {
                 throw new Exception(ServiceMessage.DRAGON_NOT_FOUND.getMessage());
             }
